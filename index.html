@@ -1,475 +1,58 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nuestras Semanas 💛</title>
-
-<style>
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #f6e6b4, #d4a373);
-    display: flex;
-}
-
-/* MENÚ */
-#menu {
-    width: 260px;
-    background: #6f4e37;
-    padding: 20px;
-    height: 100vh;
-    overflow-y: auto;
-    box-shadow: 2px 0 15px rgba(0,0,0,0.2);
-    color: #fff8e7;
-}
-
-#menu h2 {
-    margin-top: 0;
-    color: #ffd166;
-}
-
-/* LINKS */
-.note-link {
-    display: block;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.3s;
-    background: rgba(255, 209, 102, 0.2);
-}
-
-.note-link:hover {
-    background: #ffd166;
-    color: #5c3d2e;
-}
-
-/* CONTENIDO */
-#content {
-    flex: 1;
-    padding: 40px;
-    text-align: center;
-    color: #5c3d2e;
-}
-
-.note-title {
-    font-size: 2.2rem;
-    margin-bottom: 20px;
-    color: #6f4e37;
-}
-
-.note-image {
-    max-width: 320px;
-    border-radius: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-}
-
-.note-body {
-    background: #fff8e7;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    max-width: 700px;
-    margin: 20px auto;
-    line-height: 1.8;
-    font-size: 1.15rem;
-    text-align: justify;
-    max-height: 400px;
-    overflow-y: auto;
-}
-
-/* Scroll elegante */
-.note-body::-webkit-scrollbar {
-    width: 8px;
-}
-
-.note-body::-webkit-scrollbar-thumb {
-    background: #d4a373;
-    border-radius: 10px;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#171116">
+  <meta name="description" content="Un pequeño espacio hecho de palabras, flores y recuerdos.">
+  <title>Un detalle para ti ♡</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
+  <div class="petals petals-left" aria-hidden="true">✿</div>
+  <div class="petals petals-right" aria-hidden="true">✿</div>
+  <header class="hero">
+    <div class="flower-line" aria-hidden="true">✿ <span>❀</span> ✿</div>
+    <p class="eyebrow">UN PEQUEÑO DETALLE, TODOS LOS DÍAS</p>
+    <h1>Un mensaje por <em> cada día contigo.</em></h1>
+  </header>
 
-<div id="menu">
-    <h2>Semanas 💛</h2>
-    <div id="notesList"></div>
-</div>
+  <main class="layout">
+    <section class="today-panel" aria-labelledby="today-title">
+      <div class="today-heading">
+        <span class="today-flower">✿</span>
+        <div>
+          <h2 id="today-title">El detalle de hoy</h2>
+        </div>
+      </div>
+      <article id="today-entry" class="today-entry">
+        <p class="loading">Preparando una sorpresa…</p>
+      </article>
+      <p class="today-note">Y mañana habrá un nuevo mensaje para ti.</p>
+    </section>
 
-<div id="content">
-    <h1>Bienvenida mi amor 💛</h1>
-    <p>Cada semana tendrás una nueva sorpresa aquí. Te contare como fue conocerte durante las primeras semanas y después dedicare con cada palabra a los sentimientos que me has hecho sentir, además de hablarte de los momentos especiales, espero que pueda hacerte sonreir como siempre me has hecho sonreir a mi.</p>
-</div>
+    <section class="archive" aria-labelledby="archive-title">
+      <div class="archive-heading">
+        <div>
+          <p class="eyebrow">CADA PALABRA TIENE SU DÍA</p>
+          <h2 id="archive-title">Nuestro pequeño diario</h2>
+        </div>
+        <span class="archive-count" id="entry-count">0 detalles</span>
+      </div>
+      <div id="entry-list" class="entry-list" aria-live="polite"></div>
+    </section>
+  </main>
 
-<audio id="bgMusic"></audio>
+  <footer>
+    <div class="footer-flower">❀</div>
+    <p>Hecho especialmente para ti.</p>
+    <span>Con amor, hoy y todos los días. ♡</span>
+  </footer>
 
-<script>
-
-// 📅 CAMBIA ESTA FECHA SI ES NECESARIO
-const startDate = new Date("2025-09-05");
-
-// 📝 NOTAS
-const notes = [
-{
-    title: "Semana 1",
-    image: "images/semana1.png",
-    music: "music/semana1.mp3",
-    content: "Cómo olvidar aquella sensación que conmueve a cualquier humano, el quedarse fascinado al descubrir algo por primera vez... Fue una sensación parecida a esta cuando tuve la suerte de escucharte por primera vez, aunque en ese entonces sentía algo más que fascinación, pues al escuchar esa voz tan dulce y cálida, sentí felicidad, sentí cariño, sentí emoción y sentí amor... Y desde entonces no he parado de enamorarme cada vez más, con el mismo sentimiento de estar contigo por primera vez."
-},
-{
-    title: "Semana 2",
-    image: "images/semana2.jpeg",
-    music: "music/semana2.mp3",
-    content: "Después de haberte conocido por varios días, seguí sorprendido, pues jamás imaginé que hubiera alguien con quien pudiera conectar tan fuertemente como lo hice contigo. Mis sentimientos e ilusiones comenzaron a florecer dentro de mis sueños al ver que tú parecías tener iniciativa e interés genuino por mí, con acciones como pedir mi número o empezar a quedarte conmigo cada noche como si fuera algo natural. Realmente empecé a creer que tú, al igual que yo, te estabas enamorando a mi lado."
-},
-{
-    title: "Semana 3",
-    image: "images/semana3.png",
-    music: "music/semana3.mp3",
-    content: "Poco a poco y durante estos días, fuimos demostrando más la atracción que sentíamos, con cada frase que parecía ser un juego, pero que en realidad iba dirigida a la razón del amor del uno con el otro. Yo me sentía feliz de recibir cada una de tus frases, incluso si parecían un juego, porque yo realmente sentía un amor sincero por ti... y porque sabía que cada una de las cosas que te decía tenía un verdadero significado."
-},
-{
-    title: "Semana 4",
-    image: "images/semana4.png",
-    music: "music/semana4.mp3",
-    content: "Fuimos sinceros el uno con el otro y finalmente confesamos lo que sentíamos, y ese gentil acto de amor en el que nos acompañábamos cada noche sin saber realmente por qué estábamos ahí, ahora se había convertido en algo con un verdadero significado, pues desde ese momento no queríamos encontrarnos sin lo que era tener la compañía del otro, al menos yo... ya no quería saber lo que era tener una vida sin ti."
-},
-{
-    title: "Semana 5",
-    image: "images/semana5.png",
-    music: "music/semana5.mp3",
-    content: "Esa feliz semana nos llevó a seguir celebrando hasta el día de hoy el pasar del tiempo a tu lado y el significado del primer mes que logré junto a ti. Aunque pueda decirte de mil maneras lo que para mí fue todo ese tiempo, jamás sería capaz de explicarte lo magnífico que para mí fue, pero sé que tú lo viviste a mi lado y que si buscas en lo profundo de tu corazón, lograrás encontrar un lugar cálido y seguro, pues son esos los cimientos de lo que formamos juntos en aquellos días."
-},
-{
-    title: "Semana 6",
-    image: "images/semana6.png",
-    music: "music/semana6.mp3",
-    content: "El recuerdo de aquella semana donde para mí hiciste el primer gran detalle que había recibido en toda mi vida; incluso ahora no puedo evitar emocionarme al ver ese bello recuerdo mientras hacías una celebración para mí por mi cumpleaños. Créeme que jamás me había sentido tan amado nunca antes y jamás había querido amar tanto a alguien como te amo a ti."
-},
-{
-    title: "Semana 7",
-    image: "images/semana7.jpg",
-    music: "music/semana7.mp3",
-    content: "Esa hermosa semana culminó en el día que para mí siempre voy a llevar en mi corazón, pues esa fue la primera vez que de manera simbólica unimos nuestros corazones y, aunque no se tratase de una boda real, para mí la felicidad de hacer eso a tu lado hizo sentir dentro de mí que ese momento era más bello que cualquiera de los sueños que podría haber pasado a tu lado. Me demostraste que la realidad de tenerte junto a mí es más grande que cualquier cosa."
-},
-{
-    title: "Semana 8",
-    image: "images/semana8.png",
-    music: "music/semana8.mp3",
-    content: "Con cada semana hasta ahora, no paraba de confirmar lo tan locamente enamorado que me encontraba por ti con cada cosa nueva que descubrías; era como encontrar un cofre lleno de misterios y con cada uno de esos misterios no paras de sorprenderte más, aunque sin dudarlo, tú eres mucho más valiosa que cualquier misterio que pueda existir en este mundo."
-},
-{
-    title: "Semana 9",
-    image: "images/semana9.png",
-    music: "music/semana9.mp3",
-    content: "2 meses que se sintieron como 2 vidas juntos, no porque el tiempo pase rápido a tu lado, sino porque fui feliz como nunca en mi vida. Tantos años no se comparan con la felicidad de cada uno de esos días y no hay manera de describir lo hermoso que fue y que ha sido seguir recibiendo mensajes tuyos, seguir pasando noches a tu lado, seguir teniendo cada hermosa foto tuya y seguir escuchando esa voz que tanto amo. No importa si son 2 meses, 2 años o 2 vidas, solo importa que el tiempo que pase sea junto a ti."
-},
-{
-    title: "Semana 10",
-    image: "images/semana10.png",
-    music: "music/semana10.mp3",
-    content: "Con el pasar de los días, nuestro amor se iba volviendo más grande y, aunque descubríamos obstáculos en el camino, no eran más que pruebas para que lo que sentíamos se hiciera más fuerte. A pesar de que también teníamos nuestros problemas, yo nunca dudé, pues sabía que lo perfecto en verdad no existe. Lo que verdaderamente significa la perfección es aquello imperfecto en lo que encontramos lo bueno en cada cosa que podría parecer que está mal, pues no tomamos una herida y la ocultamos; sanamos la herida hasta que llegue la calidez y el amor donde antes había dolor."
-},
-{
-    title: "Semana 11",
-    image: "images/semana11.jpeg",
-    music: "music/semana11.mp3",
-    content: "Hoy, más que una experiencia, te comparto un pensamiento, pues como esta simple foto hay muchas más que te has encargado de mandarme. Puede que parezca una foto random, pero para mí es la huella de lo que compartes conmigo; son estas cosas simples y sencillas las que me hacen conocerte y saber que existes en mi mundo. Aprecio el saber lo que haces, el cómo estás, en lo que piensas y cómo vives tu vida, pues el significado de mi amor está en cada detalle que pueda aprender de ti, así que espero poder compartir por mucho más tiempo fotos así de sencillas, donde pueda conocer más a la persona que amo."
-},
-{
-    title: "Semana 12",
-    image: "images/semana12.png",
-    music: "music/semana12.mp3",
-    content: "Desde que te conocí, supe que eras una persona que ha logrado mucho en esta vida, pero no ha sido hasta que compartí todos estos días contigo que he podido ver realmente lo que hay detrás de todo eso, pues en donde se ve una persona llena de valores y con una vida formada, también se puede ver en lo profundo alguien que se esfuerza por ser mejor cada día, alguien que supera sus límites y traspasa barreras. Para mí, es realmente gratificante el poder ver lo mucho que amas esforzarte."
-},
-{
-    title: "Semana 13",
-    image: "images/semana13.png",
-    music: "music/semana13.mp3",
-    content: "Muchos dicen que el amor después de 3 meses desaparece y que los sentimientos cambian a ser solo atracción física; aunque también me atraigas físicamente, sigo pensando que en lo que siento por ti no aplica este pensamiento, pues cada vez que te veo no solo veo tu rostro o tu cuerpo, veo más allá, veo tu alma y todo lo que te hace ser tú misma, veo el carisma que muestras con cada frase que me hace reír, veo el amor en cada te amo que me dices, encuentro la ternura en tu manera de hacer caritas y veo tu compromiso en cada beso que nos mandamos el uno con el otro; aunque te vea físicamente, yo me enamoro de cada una de esas cosas sentimentalmente."
-},
-{
-    title: "Semana 14",
-    image: "images/semana14.jpeg",
-    music: "music/semana14.mp3",
-    content: "Dentro de cada momento que paso contigo, hay algo único que lo diferencia del resto, pues aunque sean totalmente diferentes los unos de los otros, no se puede negar la huella de felicidad y alegría que siento dentro de mí al pensar en cada uno de ellos. Son momentos que se sienten, no que se cuentan, pues si se contaran realmente, no habría palabras para poder describir cómo es que la compañía de tu sonrisa o de tu voz llenan de dulzura cada instante que paso a tu lado."
-},
-{
-    title: "Semana 15",
-    image: "images/semana15.jpeg",
-    music: "music/semana15.mp3",
-    content: "Hoy por hoy te puedo confesar que guardo mi propio museo, un museo que he construido sobre los cimientos de tu belleza y al cual solo tú y yo tenemos acceso. Quizá tú guardes para ti misma un museo aún más grande, pero sin importar el tamaño, encuentro la felicidad en la razón de que cada una de las piezas que guarda mi museo está ahí porque un ángel como tú decidió iluminar mi mirada y dejar preservada en cada imagen su belleza. Quizá no valga millones, pero para mí vale mi vida entera..."
-},
-{
-    title: "Semana 16",
-    image: "images/semana16.png",
-    music: "music/semana16.mp3",
-    content: "Cerca de cada día especial, yo me sigo dando cuenta de que eres lo más especial de mi vida, pues a tu lado cada día lo haces especial, al igual que cada uno de los sentimientos que mi corazón tiene por ti. Me haces emocionarme como nadie, me haces ser feliz y sobre todo me haces sentirme vivo, por eso es que cada día que comparto contigo lo siento como si de una nueva vida se tratase, pues desde que llegaste a mí, jamás pensé que el mundo se podría ver tan colorido y tan lleno de vida. Gracias por ser esa persona capaz de iluminarlo todo."
-},
-{
-    title: "Semana 17",
-    image: "images/semana17.png",
-    music: "music/semana17.mp3",
-    content: "En esta Navidad recibo el regalo más grande que Dios podría haber traído a mi vida. No es un regalo como aquellos que pedí en cada día 24; es un regalo que ni siquiera en mis sueños podría haber imaginado completamente. Aquel regalo eres tú, un regalo que vino a mi vida para demostrarme que el amor existe y que tú me lo das todos los días. Llegaste para bendecir mi vida y para mejorar cada aspecto de mi persona, pero aunque aún no sea la mejor versión de mí, quiero tratar de serlo algún día para regalarte a ti también una vida tan feliz como lo has hecho de la mía."
-},
-{
-    title: "Semana 18",
-    image: "images/semana18.jpeg",
-    music: "music/semana18.mp3",
-    content: "Decir que este año es el mejor de mi vida sería como declarar que no estarás en los siguientes, pues aunque no pueda ver el futuro, estoy seguro de que haré hasta lo imposible para que estés a mi lado, y de esta manera sabré que contigo no se tratará de tener los mejores años, pues incluso los años se quedan cortos cuando hablo sobre ti, pues tú realmente, e incluso ahora sin saber nada del futuro, me has permitido saber que esta vida ya es la mejor porque tuve la oportunidad de haber coincidido con quien para mí es mi verdadero amor del alma."
-},
-{
-    title: "Semana 19",
-    image: "images/semana19.jpeg",
-    music: "music/semana19.mp3",
-    content: "No siempre se inician las cosas de la mejor manera, pues vivimos hasta encontrarnos con algo tan bueno que marque un nuevo inicio en nuestra historia, algo tan único que marque un fin en el pasado y nos haga mirar el presente y caminar hacia el futuro. Yo he vivido muchos momentos, pero no fue hasta que llegaste tú que tuve un nuevo inicio en mi vida, uno que quiero caminar a tu lado y del cual no quiero que exista un final. Te invito a que me acompañes para que juntos podamos formar algo hermosamente nuevo."
-},
-{
-    title: "Semana 20",
-    image: "images/semana20.png",
-    music: "music/semana20.mp3",
-    content: "El que compartas conmigo no solo cada experiencia o momento, sino que aquellos detalles, vuelve todo mucho más especial, no por lo que compartamos, sino porque sé que lo que comparto lo hago contigo y que es todo un símbolo de la unión de nuestro amor y la manera en que nuestras almas, junto con nuestras ideas, se unen para confirmar una vez más que, mientras sigamos compartiendo también nuestro amor, entonces nuestros sentimientos serán eternos por cada una de estas huellas."
-},
-{
-    title: "Semana 21",
-    image: "images/semana21.png",
-    music: "music/semana21.mp3",
-    content: "Quizá no seas una experta, pero sin importar lo que sea, desde que te conozco estoy seguro de que con tu forma de ser puedes afrontarlo todo. Con tu inteligencia y dulzura eres capaz de reparar hasta aquello transformado por la realidad. Así fue como llegaste a mi vida, tomaste mi corazón y curaste todos mis males. Ahora, gracias a ti, quiero ser una mejor persona y afrontar mi futuro a tu lado con la fuerza que le devolviste a mi vida."
-},
-{
-    title: "Semana 22",
-    image: "images/semana22.jpeg",
-    music: "music/semana22.mp3",
-    content: "En esta semana ocurrio el día que por ahora será el más importante opara mi, pues me bendeciste con la hermosa respueste de que realmente querias ser mi novia, yo me encontraba muy nervioso al respecto a pesar de que ya nos tratabamos como una pareja y aunque ser novios pueda ser solo un titulo, no cabe duda que estoy muy feliz de ser el novio de la que para mi es la mujer más perfecta en este mundo y a la cuál amo con toda mi vida. Amo el hecho de poder llamarte mi novia."
-},
-{
-    title: "Semana 23",
-    image: "images/semana23.jpeg",
-    music: "music/semana23.mp3",
-    content: "Después de que me confirmaste con cada una de tus acciones lo mucho que me amabas, fue que recibí un hermoso detalle tuyo, no solo por lo increíble de aquello material que me habías enviado, sino también por el motivo y la intención. No he recibido muchos regalos en mi vida, pero de todos ellos, sin lugar a dudas, mis favoritos son los tuyos, porque vienen de la persona que más amo y la cual fue tan atenta de haber compartido conmigo esa intención unida con el amor."
-},
-{
-    title: "Semana 24",
-    image: "images/semana24.png",
-    music: "music/semana24.mp3",
-    content: "El último día de esta semana me alegré mucho al poder ver en tu cara reflejada la felicidad por el regalo que estuve preparando para ti. Aunque haya sido un día antes, creo que no se necesita un día específico para poder celebrar y compartir el amor, sobre todo cuando se trata de nosotros, pues contigo aprendí que el amor no se regala ni se exige; el amor se da a aquella persona que naturalmente te hace sentir así y, contigo, tengo amor por montones."
-},
-{
-    title: "Semana 25",
-    image: "images/semana25.jpeg",
-    music: "music/semana25.mp3",
-    content: "Después de haberte sorprendido yo, tuviste la iniciativa de sorprenderme tú también con un regalo tan bello que pocos hombres son afortunados de recibir. Esas rosas significaban para mí todo el amor que poco a poco fuimos sembrando juntos y floreció finalmente gracias a ti en un presente de amor muy bello y acompañado por cosas ricas y dulces que fueron un sueño para mi alma y para aquel niño que siempre soñó con alguien que demostrara su amor de esa manera; ahora ese niño es feliz a tu lado."
-},
-{
-    title: "Semana 26",
-    image: "images/semana26.jpeg",
-    music: "music/semana26.mp3",
-    content: "Durante estos días he sido testigo al completo de tu belleza y, para mi sorpresa, siempre hay algo en ti que te hace ver aún más hermosa o cambios que hacen que tu belleza vuelva a brotar de una manera distinta, pero sin perder preciosura tan natural, la cual me cautivó desde un principio, porque no importa lo que cambie de ti, si es tu pelo, tu maquillaje, el color de tus uñas, tus cejas; simplemente eres perfectamente bella de todas las maneras."
-},
-{
-    title: "Semana 27",
-    image: "images/semana27.png",
-    music: "music/semana27.mp3",
-    content: "Medio año contigo que para mí ha significado el tiempo más magnífico que he tenido la dicha de vivir hasta ahora. Aunque pueda parecer que no es mucho, en realidad es la huella del inicio de nuestra historia como personas capaces de compartir un amor tan grande como ningún otro. Sin importar los obstáculos o los problemas, cada vez que paso tiempo contigo, mi amor no solo se vuelve más grande, sino que también se vuelve más fuerte, porque mientras más estoy a tu lado, más deseo estarlo por mucho más tiempo."
-},
-{
-    title: "Semana 28",
-    image: "images/semana28.jpeg",
-    music: "music/semana28.mp3",
-    content: "Una vez más me confirmas que eres capaz de crear las cosas más magníficas y emocionalmente más valiosas que ni siquiera la vida propia es capaz de crear, pues con tus manos puedes darle forma hasta al mismo universo y crear en las personas cosas que las hacen inmensamente felices. A mí me vuelve feliz el ver cómo pones tu empeño en realizar cosas que sabes que mi corazón siempre ama, como un niño pequeño al ver lo que más anhela."
-},
-{
-    title: "Semana 29",
-    image: "images/semana29.jpeg",
-    music: "music/semana29.mp3",
-    content: "A tu persona no la viste cualquier cosa, pues igual que al cielo, por más que las nubes se encarguen de adornarlo, es el mismo cielo el que las hace ver hermosas. En esta vida no hay nada que adorne tu belleza, pues tu belleza es tan inmensa que eres capaz de darle brillo a todo tu alrededor. No es una belleza cualquiera, es la belleza de la más bella; no es una belleza únicamente exterior, pues tú eres bella incluso en el interior."
-},
-{
-    title: "Semana 30",
-    image: "images/semana30.png",
-    music: "music/semana30.mp3",
-    content: "Me siento lleno de orgullo al ver cómo, incluso delante de otros, se puede ver tu brillo, ver cómo juegas lo que te gusta y resaltas con tu esfuerzo; me hace querer darte mi apoyo hasta el último de mis esfuerzos. Quiero estar contigo y ver tus esfuerzos porque me da alegría ver tus alas abrirse poco a poco; incluso si al final vuelves con ellas al cielo, siempre rezaré por aquel ángel que ilumine el mundo con sus acciones."
-},
-{
-    title: "Semana 31",
-    image: "images/semana31.png",
-    music: "music/semana31.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 32",
-    image: "images/semana32.png",
-    music: "music/semana32.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 33",
-    image: "images/semana33.png",
-    music: "music/semana33.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 34",
-    image: "images/semana34.png",
-    music: "music/semana34.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 35",
-    image: "images/semana35.png",
-    music: "music/semana35.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 36",
-    image: "images/semana36.png",
-    music: "music/semana36.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 37",
-    image: "images/semana37.png",
-    music: "music/semana37.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 38",
-    image: "images/semana38.png",
-    music: "music/semana38.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 39",
-    image: "images/semana39.png",
-    music: "music/semana39.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 40",
-    image: "images/semana40.png",
-    music: "music/semana40.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 41",
-    image: "images/semana41.png",
-    music: "music/semana41.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 42",
-    image: "images/semana42.png",
-    music: "music/semana42.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 43",
-    image: "images/semana43.png",
-    music: "music/semana43.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 44",
-    image: "images/semana44.png",
-    music: "music/semana44.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 45",
-    image: "images/semana45.png",
-    music: "music/semana45.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 46",
-    image: "images/semana46.png",
-    music: "music/semana46.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 47",
-    image: "images/semana47.png",
-    music: "music/semana47.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 48",
-    image: "images/semana48.png",
-    music: "music/semana48.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 49",
-    image: "images/semana49.png",
-    music: "music/semana49.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 50",
-    image: "images/semana50.png",
-    music: "music/semana50.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 51",
-    image: "images/semana51.png",
-    music: "music/semana51.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-{
-    title: "Semana 52",
-    image: "images/semana52.png",
-    music: "music/semana52.mp3",
-    content: "Cada día contigo es un regalo que nunca dejaré de agradecer..."
-},
-
-
-];
-
-// 🔓 Calcular semanas desbloqueadas
-function getUnlockedWeeks() {
-    const today = new Date();
-    const diffTime = today - startDate;
-    const diffWeeks = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7));
-    return diffWeeks + 1;
-}
-
-const unlockedWeeks = getUnlockedWeeks();
-const notesList = document.getElementById("notesList");
-const contentDiv = document.getElementById("content");
-const musicPlayer = document.getElementById("bgMusic");
-
-// 📂 Crear menú dinámicamente
-notes.forEach((note, index) => {
-    if (index < unlockedWeeks) {
-        const link = document.createElement("div");
-        link.className = "note-link";
-        link.innerText = note.title;
-        link.onclick = () => showNote(note);
-        notesList.appendChild(link);
-    }
-});
-
-// 📄 Mostrar nota y reproducir música
-function showNote(note) {
-
-    contentDiv.innerHTML = `
-        <div class="note-title">${note.title}</div>
-        <img class="note-image" src="${note.image}" />
-        <div class="note-body">${note.content}</div>
-    `;
-
-    musicPlayer.pause();
-    musicPlayer.currentTime = 0;
-    musicPlayer.src = note.music;
-    musicPlayer.loop = true;
-    musicPlayer.play();
-}
-
-</script>
-
+  <script src="entries.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
