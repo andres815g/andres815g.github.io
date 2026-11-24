@@ -75,5 +75,27 @@ window.ENTRIES = [
     text: "En el mundo existen miles de dioses en tantas culturas, todos ellos inspiran a la gente y alivian sus problemas, si a mi me preguntaran si tu eres una diosa, nunca me faltarian pruebas para desmostrar que lo eres, al igual que los demás dioses tu siempre has estado para mi, tu mayor subdito, a tu lado jamás me ha faltado felicidad, amor, cariño y comprensión, solo alguien quien verdaderamente es una diosa podría hacerme sentir de esa manera. Aunque yo sea un simple humano me gustaría ser tu guardían y esperar 500 años o los que hagan falta para volver a estar contigo y enamorarme de ti, eres mi diosa y siempre te amaré.",
     image: "assets/imagenes/IMG 10.jpg",
     audio: "assets/audio/SONG 10.mp3"
+  },
+{
+    date: "2026-11-21",
+    title: "Eres mía",
+    text: "Amo la idea de que tu seas mía, no como un objeto si no como alguien a quién amo tanto que este conmigo y pienso en todo momento, alguien a quien le puedo dedicar mis palabras, mi tiempo y mis emociones, eres mía no como quién esclaviza a alguien, eres mía como quién llama a algo suyo para cuidarlo y protegerlo por siempre, de la misma forma que mi corazón y mi ser son tuyos, yo también quiero que tu seas mía por toda la vida.",
+    image: "assets/imagenes/IMG 11.jpg",
+    audio: "assets/audio/SONG 11.mp3"
+  },
+{
+    date: "2026-11-22",
+    title: "Tus colores",
+    text: "En esta vida no hay colores más bellos que los suyos, pues con esos ojos cafes y el negro de su pelo, da felicidad al mundo entero, ni la tierra entera tiene tonos más brillantes que los tuyos. Quisiera ser pintor para replicar tu mirada, aunque no podría replicar tu belleza ni con la mejor pincelada, no hay ninguna paleta que tenga tus colores, por eso eres el más grande de mis amores.",
+    image: "assets/imagenes/IMG 12.jpg",
+    audio: "assets/audio/SONG 12.mp3"
+  },
+{
+    date: "2026-11-23",
+    title: "Mi mundo es de dos",
+    text: "Mi mundo no es como el del resto, mi mundo es el más hermoso y honesto, desde que estoy en el encuentro la felicidad, es tan bello que incluso parece que no es de esta realidad. Estoy seguro que mi mundo viene del cielo, puede que antes haya sido un angel eso no lo niego, mi mundo no es un mundo como cualquiera, mi mundo es la persona que amo y llena mi vida entera, dentro de el ella y yo somos los únicos viviendo, pero para mi es más que suficiente mientras nos sigamos queriendo.",
+    image: "assets/imagenes/IMG 13.jpg",
+    audio: "assets/audio/SONG 13.mp3"
   }
+
 ];
